@@ -3,14 +3,17 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 from .models import Complaint
+from django.contrib.auth.models import User
 
 
-# Create your tests here.
+# Create tests here.
+
 class ModelTestCase(TestCase):
     """This class defines the test suite for the Complaint model."""
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create(username="root")
         self.complaint_category = "Street Noise"
         self.complaint_severity = "5"
         self.complaint_latitude = "55.6786513"
@@ -18,14 +21,21 @@ class ModelTestCase(TestCase):
         self.complaint = Complaint(category=self.complaint_category,
                                    severity=self.complaint_severity,
                                    latitude=self.complaint_latitude,
-                                   longitude=self.complaint_longitude)
+                                   longitude=self.complaint_longitude,
+                                   owner=user)
 
     def test_model_can_create_a_complaint(self):
         """Test the Complaint model can create a Complaint"""
         old_count = Complaint.objects.count()
         self.complaint.save()
         new_count = Complaint.objects.count()
+
+        self.assertNotEqual(old_count, new_count)
         self.assertEqual(old_count + 1, new_count)
+
+    def test_model_returns_readable_representation(self):
+        """Test a readable string is returned for the model instance."""
+        self.assertEqual(str(self.complaint), self.complaint_category)
 
 
 class ViewTestCase(TestCase):
@@ -33,16 +43,28 @@ class ViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other variables."""
+        user = User.objects.create(username="root")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
+
         self.complaint_data = {'category': 'Street Noise',
                                'severity': '5',
                                'latitude': '55.6786513',
-                               'longitude': '12.5693486'}
+                               'longitude': '12.5693486',
+                               'owner': user.id}
         self.response = self.client.post(
             reverse('create'),
             self.complaint_data,
             format="json"
         )
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        res = new_client.get('/complaints/', kwargs={'pk': 3}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_api_can_create_a_complaint(self):
         """Test the api has complaint creation capability."""
@@ -50,32 +72,32 @@ class ViewTestCase(TestCase):
 
     def test_api_can_get_a_complaint(self):
         """Test the api can get a given complaint."""
-        complaint = Complaint.objects.get()
-        response = self.client.get(
-            reverse('details',
-                    kwargs={'pk': complaint.id}), format="json"
-        )
+        complaint = Complaint.objects.get(id=1)
+        res = self.client.get('/complaints/', kwargs={'pk': complaint.id}, format="json")
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, complaint)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertContains(res, complaint)
 
     def test_api_can_update_a_complaint(self):
-        """Test teh api can update a given complaint."""
+        """Test the api can update a given complaint."""
         """Note from Chad: I don't think the actual API should be able to do this."""
         complaint = Complaint.objects.get()
-        change_complaint = {'severity': '10'}
+        change_complaint = {'category': 'Business Noise',
+                            'severity': self.complaint_data['severity'],
+                            'latitude': self.complaint_data['latitude'],
+                            'longitude': self.complaint_data['longitude']}
         res = self.client.put(
             reverse('details', kwargs={'pk': complaint.id}),
             change_complaint, format='json'
         )
+        print(res)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_api_can_delete_complaint(self):
         """Test the api can delete a bucketlist."""
         complaint = Complaint.objects.get()
-        response = self.client.delete(
+        res = self.client.delete(
             reverse('details', kwargs={'pk': complaint.id}),
-            format='json',
-            follow=True)
+            format='json', follow=True)
 
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEquals(res.status_code, status.HTTP_204_NO_CONTENT)
