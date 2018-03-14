@@ -11,4 +11,4 @@ class ComplaintSerializer(serializers.ModelSerializer):
         """Meta class to map the serializer's fields with the model fields."""
         model = Complaint
         fields = ('id', 'timestamp', 'category', 'severity', 'latitude', 'longitude')
-        read_only_fields = ('timestamp', 'category', 'severity', 'latitude', 'longitude')
+        # read_only_fields = ('timestamp', 'category', 'severity', 'latitude', 'longitude')

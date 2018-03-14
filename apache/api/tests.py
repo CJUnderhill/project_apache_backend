@@ -47,3 +47,35 @@ class ViewTestCase(TestCase):
     def test_api_can_create_a_complaint(self):
         """Test the api has complaint creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_complaint(self):
+        """Test the api can get a given complaint."""
+        complaint = Complaint.objects.get()
+        response = self.client.get(
+            reverse('details',
+                    kwargs={'pk': complaint.id}), format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, complaint)
+
+    def test_api_can_update_a_complaint(self):
+        """Test teh api can update a given complaint."""
+        """Note from Chad: I don't think the actual API should be able to do this."""
+        complaint = Complaint.objects.get()
+        change_complaint = {'severity': '10'}
+        res = self.client.put(
+            reverse('details', kwargs={'pk': complaint.id}),
+            change_complaint, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_complaint(self):
+        """Test the api can delete a bucketlist."""
+        complaint = Complaint.objects.get()
+        response = self.client.delete(
+            reverse('details', kwargs={'pk': complaint.id}),
+            format='json',
+            follow=True)
+
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)

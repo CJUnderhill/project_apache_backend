@@ -14,3 +14,10 @@ class CreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         """Save the POST data when creating a new complaint"""
         serializer.save()
+
+
+class DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the HTTP GET, PUT, and DELETE requests."""
+
+    queryset = Complaint.objects.all()
+    serializer_class = ComplaintSerializer
