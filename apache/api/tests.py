@@ -1,5 +1,7 @@
 from django.test import TestCase
-
+from rest_framework.test import APIClient
+from rest_framework import status
+from django.urls import reverse
 from .models import Complaint
 
 
@@ -24,3 +26,24 @@ class ModelTestCase(TestCase):
         self.complaint.save()
         new_count = Complaint.objects.count()
         self.assertEqual(old_count + 1, new_count)
+
+
+class ViewTestCase(TestCase):
+    """Test suite for the API views."""
+
+    def setUp(self):
+        """Define the test client and other variables."""
+        self.client = APIClient()
+        self.complaint_data = {'category': 'Street Noise',
+                               'severity': '5',
+                               'latitude': '55.6786513',
+                               'longitude': '12.5693486'}
+        self.response = self.client.post(
+            reverse('create'),
+            self.complaint_data,
+            format="json"
+        )
+
+    def test_api_can_create_a_complaint(self):
+        """Test the api has complaint creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
