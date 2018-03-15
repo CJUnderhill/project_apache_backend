@@ -1,6 +1,7 @@
-from rest_framework import serializers
-from .models import Complaint
 from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from .models import Complaint
 
 
 # Create serializers here.
@@ -20,10 +21,10 @@ class ComplaintSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     """A user serializer to aid in authentication and authorization."""
 
-    bucketlists = serializers.PrimaryKeyRelatedField(
+    complaints = serializers.PrimaryKeyRelatedField(
         many=True, queryset=Complaint.objects.all())
 
     class Meta:
         """Map this serializer to the default django user model."""
         model = User
-        fields = ('id', 'username', 'complaint')
+        fields = ('id', 'username', 'complaints')
