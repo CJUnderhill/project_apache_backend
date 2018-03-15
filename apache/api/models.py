@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
@@ -8,8 +8,8 @@ from rest_framework.authtoken.models import Token
 # Create models here.
 
 def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/photos/<complaint_timestamp>.jpg
-    return 'photos/{0}'.format(str(instance.timestamp) + ".jpg")
+    # file will be uploaded to MEDIA_ROOT/images/<complaint_timestamp>.jpg
+    return 'images/{0}'.format(str(instance.timestamp) + ".jpg")
 
 
 def audio_directory_path(instance, filename):

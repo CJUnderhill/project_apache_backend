@@ -1,9 +1,10 @@
-from django.test import TestCase
-from rest_framework.test import APIClient
-from rest_framework import status
-from django.urls import reverse
-from .models import Complaint
 from django.contrib.auth.models import User
+from django.test import TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+
+from .models import Complaint
 
 
 # Create tests here.

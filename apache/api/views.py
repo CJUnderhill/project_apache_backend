@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
 from rest_framework import generics, permissions
+
+from .models import Complaint
 from .permissions import IsOwner
 from .serializers import ComplaintSerializer, UserSerializer
-from .models import Complaint
-from django.contrib.auth.models import User
 
 
 # Create views here.
