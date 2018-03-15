@@ -8,8 +8,13 @@ from rest_framework.authtoken.models import Token
 # Create models here.
 
 def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/photos/<imageID>.jpg
+    # file will be uploaded to MEDIA_ROOT/photos/<complaint_timestamp>.jpg
     return 'photos/{0}'.format(str(instance.timestamp) + ".jpg")
+
+
+def audio_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/audio/<complaint_timestamp>.aac
+    return 'audio/{0}'.format(str(instance.timestamp) + ".aac")
 
 
 class Complaint(models.Model):
@@ -19,7 +24,8 @@ class Complaint(models.Model):
     severity = models.TextField()
     latitude = models.TextField()
     longitude = models.TextField()
-    image = models.ImageField(upload_to=image_directory_path, blank=True) # blank=True means field is not required
+    image = models.ImageField(upload_to=image_directory_path, blank=True)  # blank=True means field is not required
+    audio = models.FileField(upload_to=audio_directory_path, blank=True)  # blank=True means field is not required
     owner = models.ForeignKey('auth.User', related_name='complaints', on_delete=models.CASCADE)
 
     def __str__(self):
