@@ -109,3 +109,4 @@ venv.bak/
 
 # Project-specific
 media/
+migrations/
