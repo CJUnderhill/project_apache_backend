@@ -7,7 +7,7 @@ This project is built with Django and the Django REST Framework.
 ## Setup
 This section details the steps required to set this project up.
 
-#### Requirements
+### Requirements
 The APACHE backend system has the following dependencies:
 
 - Python 3.*
@@ -19,7 +19,7 @@ The APACHE backend system has the following dependencies:
   
 Ensure that the proper version of python is installed before proceeding.
 
-#### Configuration
+### Configuration
 This section assumes the you are operating in a bash terminal.
 
 First, enter the `apache` directory in the main project folder. Create a virtual environment for this project by running:
@@ -37,7 +37,7 @@ Finally, install all of the python dependencies listed above. You may run this c
 pip install Django djangorestframework Pillow pytz
 ```
 
-#### Instantiate the database
+### Instantiate the database
 We now have to create and set up the server's database. To do so, run the following commands:
 ```bash
 python3 manage.py makemigrations api
@@ -47,7 +47,7 @@ python3 manage.py migrate
 If you encounter any errors, try deleting the `migrations` folder in the `api` directory
 and the `db.sqlite3` file in the main directory, then re-run the two commands above.
 
-#### Create a super user
+### Create a super user
 The API requires that you have account access before you are allowed to interact with it. To create an account,
 simply run the following code and follow the prompts:
 ```bash
@@ -66,7 +66,7 @@ You can navigate to this endpoint in your browser to try the API, or interact wi
 ## API Reference
 The API is accessible through the following endpoints:
 
-#### Get Authentication Token
+### Get Authentication Token
 
 Send the user's login information to receive a system-generated authentication token.
 
@@ -98,7 +98,7 @@ The username and password of the account.
 }
 ```
 
-##### Success Response
+#### Success Response
 
 **Code** : `200 OK`
 
@@ -112,7 +112,7 @@ The authentication token for a valid user.
 }
 ```
 
-#### Get List of Complaints in System
+### Get List of Complaints in System
 
 Get a list of every complaint in the system.
 
@@ -138,7 +138,7 @@ The authentication token associated with the account.
     "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
 ```
 
-##### Success Response
+#### Success Response
 
 **Code** : `200 OK`
 
@@ -162,7 +162,7 @@ A list of JSON objects containing all complaints within the system.
 ]
 ```
 
-#### Get an Individual Complaint (by ID)
+### Get an Individual Complaint (by ID)
 
 Get an individual complaint from within the system using the complaint's ID.
 
@@ -188,7 +188,7 @@ The authentication token associated with the account.
     "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
 ```
 
-##### Success Response
+#### Success Response
 
 **Code** : `200 OK`
 
@@ -210,7 +210,7 @@ A single JSON object containing a queried complaint from within the system.
 }
 ```
 
-#### Get List of Users in System
+### Get List of Users in System
 
 Get a list of every user in the system.
 
@@ -236,7 +236,7 @@ The authentication token associated with the account.
     "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
 ```
 
-##### Success Response
+#### Success Response
 
 **Code** : `200 OK`
 
@@ -259,7 +259,7 @@ A list of JSON objects containing all users within the system.
 ]
 ```
 
-#### Get an Individual User (by ID)
+### Get an Individual User (by ID)
 
 Get an individual user from within the system using the user's ID.
 
@@ -285,7 +285,7 @@ The authentication token associated with the account.
     "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
 ```
 
-##### Success Response
+#### Success Response
 
 **Code** : `200 OK`
 
