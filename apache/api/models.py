@@ -7,6 +7,11 @@ from rest_framework.authtoken.models import Token
 
 # Create models here.
 
+def image_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/photos/<imageID>.jpg
+    return 'photos/{0}'.format(str(instance.timestamp) + ".jpg")
+
+
 class Complaint(models.Model):
     """This class represents the Complaint model."""
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -14,6 +19,7 @@ class Complaint(models.Model):
     severity = models.TextField()
     latitude = models.TextField()
     longitude = models.TextField()
+    image = models.ImageField(upload_to=image_directory_path, blank=True) # blank=True means field is not required
     owner = models.ForeignKey('auth.User', related_name='complaints', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -22,7 +28,7 @@ class Complaint(models.Model):
         # return '%s %s %s %s %s' % (str(self.timestamp), self.category, self.severity, self.latitude, self.longitude)
 
 
-# This reciever handles token creation immediately after a user is created
+# This receiver handles token creation immediately after a user is created
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:

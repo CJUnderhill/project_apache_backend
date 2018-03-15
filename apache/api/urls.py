@@ -11,7 +11,7 @@ urlpatterns = {
     url(r'^complaints/(?P<pk>[0-9]+)/$', DetailsView.as_view(), name="details"),
     url(r'^users/$', UserView.as_view(), name="users"),
     url(r'users/(?P<pk>[0-9]+)/$', UserDetailsView.as_view(), name="user_details"),
-    url(r'^get-token/', obtain_auth_token), # Add this line
+    url(r'^get-token/', obtain_auth_token),
 
 }
 
