@@ -8,8 +8,8 @@ from rest_framework.authtoken.models import Token
 # Create models here.
 
 def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/photos/<complaint_timestamp>.jpg
-    return 'photos/{0}'.format(str(instance.timestamp) + ".jpg")
+    # file will be uploaded to MEDIA_ROOT/images/<complaint_timestamp>.jpg
+    return 'images/{0}'.format(str(instance.timestamp) + ".jpg")
 
 
 def audio_directory_path(instance, filename):
