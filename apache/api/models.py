@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 
 # Create models here.
@@ -16,3 +20,10 @@ class Complaint(models.Model):
         """This function returns a string representation of the class's contents."""
         return "{}".format(str(self.category))
         # return '%s %s %s %s %s' % (str(self.timestamp), self.category, self.severity, self.latitude, self.longitude)
+
+
+# This reciever handles token creation immediately after a user is created
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
