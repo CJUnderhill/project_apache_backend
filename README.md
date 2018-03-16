@@ -112,6 +112,81 @@ The authentication token for a valid user.
 }
 ```
 
+### Send a complaint to the system
+
+Get a list of every complaint in the system.
+
+**URL** : `/oomplaints/`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Permissions required** : None
+
+**Headers**
+
+The authentication token associated with the account.
+
+```
+    "Authorization": "Token [System-generated Authentication Token]"
+```
+
+**Header example** All fields must be sent.
+
+```
+    "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
+```
+
+**Data constraints**
+
+The information contained within the complaint.
+
+```json
+{
+    "comments": "[String 250 characters max]",
+    "severity": "[Integer between 1 and 5]",
+    "latitude": "[Unicode 64 characters max]",
+    "longitude": "[Unicode 64 characters max]",
+    "image": "[NOT REQUIRED; Local file location unicode 128 characters max]",
+    "audio": "[NOT REQUIRED; Local file location unicode 128 characters max]"
+}
+```
+
+**Data example**
+
+```json
+{
+    "comments": "Street Noise",
+    "severity": 5,
+    "latitude": "55.1",
+    "longitude": "11.5",
+    "image": "C:/media/photos/2018-03-15_151316.1207580000.jpg"
+}
+```
+
+#### Success Response
+
+**Code** : `201 CREATED`
+
+**Content examples**
+
+A list of JSON objects containing all complaints within the system.
+
+```json
+{
+    "id": 1,
+    "timestamp": "2018-03-15T15:13:16.120758Z",
+    "owner": "root",
+    "comments": "Street Noise",
+    "severity": 5,
+    "latitude": "55.1",
+    "longitude": "11.5",
+    "image": "http://localhost:8000/media/photos/2018-03-15_151316.1207580000.jpg",
+    "audio": null
+}
+```
+
 ### Get List of Complaints in System
 
 Get a list of every complaint in the system.
@@ -152,7 +227,7 @@ A list of JSON objects containing all complaints within the system.
         "id": 1,
         "timestamp": "2018-03-15T15:13:16.120758Z",
         "owner": "root",
-        "category": "Street Noise",
+        "comments": "Street Noise",
         "severity": "10",
         "latitude": "55.1",
         "longitude": "11.5",
@@ -201,7 +276,7 @@ A single JSON object containing a queried complaint from within the system.
     "id": 6,
     "timestamp": "2018-03-15T15:13:16.120758Z",
     "owner": "root",
-    "category": "Street Noise",
+    "comments": "Street Noise",
     "severity": "10",
     "latitude": "55.1",
     "longitude": "11.5",

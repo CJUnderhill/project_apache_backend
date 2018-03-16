@@ -19,18 +19,27 @@ def audio_directory_path(instance, filename):
 
 class Complaint(models.Model):
     """This class represents the Complaint model."""
+
+    SEVERITY_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+
     timestamp = models.DateTimeField(auto_now_add=True)
-    category = models.TextField()
-    severity = models.TextField()
-    latitude = models.TextField()
-    longitude = models.TextField()
+    comments = models.TextField()
+    severity = models.IntegerField(choices=SEVERITY_CHOICES, default=3)
+    latitude = models.TextField()   # TODO Ensure latitude is within acceptable range
+    longitude = models.TextField()  # TODO Ensure longitude is within acceptable range
     image = models.ImageField(upload_to=image_directory_path, blank=True)  # blank=True means field is not required
     audio = models.FileField(upload_to=audio_directory_path, blank=True)  # blank=True means field is not required
     owner = models.ForeignKey('auth.User', related_name='complaints', on_delete=models.CASCADE)
 
     def __str__(self):
         """This function returns a string representation of the class's contents."""
-        return "{}".format(str(self.category))
+        return "{}".format(str(self.severity))
         # return '%s %s %s %s %s' % (str(self.timestamp), self.category, self.severity, self.latitude, self.longitude)
 
 
