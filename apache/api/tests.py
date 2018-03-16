@@ -19,7 +19,7 @@ class ModelTestCase(TestCase):
         self.complaint_severity = "5"
         self.complaint_latitude = "55.6786513"
         self.complaint_longitude = "12.5693486"
-        self.complaint = Complaint(category=self.complaint_category,
+        self.complaint = Complaint(comments=self.complaint_comments,
                                    severity=self.complaint_severity,
                                    latitude=self.complaint_latitude,
                                    longitude=self.complaint_longitude,
@@ -83,7 +83,7 @@ class ViewTestCase(TestCase):
         """Test the api can update a given complaint."""
         """Note from Chad: I don't think the actual API should be able to do this."""
         complaint = Complaint.objects.get()
-        change_complaint = {'category': 'Business Noise',
+        change_complaint = {'comments': 'Business Noise',
                             'severity': self.complaint_data['severity'],
                             'latitude': self.complaint_data['latitude'],
                             'longitude': self.complaint_data['longitude']}
