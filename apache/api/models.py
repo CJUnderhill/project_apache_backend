@@ -30,6 +30,7 @@ class Complaint(models.Model):
 
     timestamp = models.DateTimeField(auto_now_add=True)
     comments = models.TextField()
+    category = models.TextField(blank=True)  # blank=True means field is not required
     severity = models.IntegerField(choices=SEVERITY_CHOICES, default=3)
     latitude = models.TextField()   # TODO Ensure latitude is within acceptable range
     longitude = models.TextField()  # TODO Ensure longitude is within acceptable range

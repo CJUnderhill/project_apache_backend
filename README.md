@@ -15,7 +15,8 @@ The APACHE backend system has the following dependencies:
   - djangorestframework 3.7.7+
   - Pillow 5.*
   - pytz 2018.3+
-- virtualenv
+  - django-cors-headers 2.2.*
+  - virtualenv 15.0.1+
   
 Ensure that the proper version of python is installed before proceeding.
 
@@ -24,6 +25,7 @@ This section assumes the you are operating in a bash terminal.
 
 First, enter the `apache` directory in the main project folder. Create a virtual environment for this project by running:
 ```bash
+pip3 install virtualenv
 virtualenv -p python3 venv
 ```
 
@@ -34,7 +36,7 @@ source venv/bin/activate
 This will isolate the operations of this program from the rest of the operating system.
 Finally, install all of the python dependencies listed above. You may run this command to do so:
 ```bash
-pip3 install Django djangorestframework Pillow pytz
+pip3 install Django djangorestframework Pillow pytz django-cors-headers
 ```
 
 ### Instantiate the database
@@ -116,7 +118,7 @@ The authentication token for a valid user.
 
 Get a list of every complaint in the system.
 
-**URL** : `/oomplaints/`
+**URL** : `/complaints/`
 
 **Method** : `POST`
 
@@ -191,7 +193,7 @@ A list of JSON objects containing all complaints within the system.
 
 Get a list of every complaint in the system.
 
-**URL** : `/oomplaints/`
+**URL** : `/complaints/`
 
 **Method** : `GET`
 
@@ -241,7 +243,7 @@ A list of JSON objects containing all complaints within the system.
 
 Get an individual complaint from within the system using the complaint's ID.
 
-**URL** : `/oomplaints/:pk/`
+**URL** : `/complaints/:pk/`
 
 **Method** : `GET`
 
