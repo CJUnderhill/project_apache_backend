@@ -29,12 +29,12 @@ virtualenv -p python3 venv
 
 Then activate this virtual environment by running:
 ```bash
-source venv/bim/activate
+source venv/bin/activate
 ```
 This will isolate the operations of this program from the rest of the operating system.
 Finally, install all of the python dependencies listed above. You may run this command to do so:
 ```bash
-pip install Django djangorestframework Pillow pytz
+pip3 install Django djangorestframework Pillow pytz
 ```
 
 ### Instantiate the database
