@@ -27,10 +27,14 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
-class UserView(generics.ListAPIView):
+class UserView(generics.ListCreateAPIView):
     """View to list the user queryset."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def perform_create(self, serializer):
+        """Save the POST data when creating a new complaint"""
+        serializer.save()
 
 
 class UserDetailsView(generics.RetrieveAPIView):
