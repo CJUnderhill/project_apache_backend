@@ -32,6 +32,11 @@ class UserView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    # def get_permissions(self):
+    #     # allow non-authenticated user to create via POST
+    #     return (permissions.AllowAny() if self.request.method == 'POST'
+    #             else permissions.IsAuthenticated())
+
     def perform_create(self, serializer):
         """Save the POST data when creating a new complaint"""
         serializer.save()

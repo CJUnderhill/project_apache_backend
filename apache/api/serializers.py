@@ -22,7 +22,7 @@ class ComplaintSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     """A user serializer to aid in authentication and authorization."""
     username = serializers.CharField()
-    password = serializers.CharField()
+    password = serializers.CharField(min_length=6, write_only=True)
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     complaints = serializers.PrimaryKeyRelatedField(many=True, queryset=Complaint.objects.all())
