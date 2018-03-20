@@ -287,6 +287,74 @@ A single JSON object containing a queried complaint from within the system.
 }
 ```
 
+### Create a user account
+
+Create a user account in the system.
+
+**URL** : `/users/`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Permissions required** : None
+
+**Headers**
+
+The authentication token associated with the posting account.
+
+```
+    "Authorization": "Token [System-generated Authentication Token]"
+```
+
+**Header example** All fields must be sent.
+
+```
+    "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
+```
+
+**Data constraints**
+
+Required user account information.
+
+```json
+{
+    "username": "[String 30 characters max]",
+    "password": "[String 6 characters min]",
+    "first_name": "[Unicode 64 characters max]",
+    "last_name": "[Unicode 64 characters max]"
+}
+```
+
+**Data example**
+
+```json
+{
+    "username": "chadju",
+    "password": "testpassword",
+    "first_name": "Chad",
+    "last_name": "Underhill"
+}
+```
+
+#### Success Response
+
+**Code** : `201 CREATED`
+
+**Content examples**
+
+A JSON object containing the new user's data.
+
+```json
+{
+    "username": "chadju",
+    "password": "testpassword",
+    "first_name": "Chad",
+    "last_name": "Underhill",
+    "complaints": []
+}
+```
+
 ### Get List of Users in System
 
 Get a list of every user in the system.
