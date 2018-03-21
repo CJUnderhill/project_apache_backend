@@ -32,8 +32,8 @@ class Complaint(models.Model):
     comments = models.TextField()
     category = models.TextField(blank=True)  # blank=True means field is not required
     severity = models.IntegerField(choices=SEVERITY_CHOICES, default=3)
-    latitude = models.TextField()   # TODO Ensure latitude is within acceptable range
-    longitude = models.TextField()  # TODO Ensure longitude is within acceptable range
+    latitude = models.FloatField()  # TODO Ensure latitude is within acceptable range
+    longitude = models.FloatField()  # TODO Ensure longitude is within acceptable range
     image = models.ImageField(upload_to=image_directory_path, blank=True)  # blank=True means field is not required
     audio = models.FileField(upload_to=audio_directory_path, blank=True)  # blank=True means field is not required
     owner = models.ForeignKey('auth.User', related_name='complaints', on_delete=models.CASCADE)

@@ -17,8 +17,8 @@ class ModelTestCase(TestCase):
         user = User.objects.create(username="root")
         self.complaint_category = "Street Noise"
         self.complaint_severity = "5"
-        self.complaint_latitude = "55.6786513"
-        self.complaint_longitude = "12.5693486"
+        self.complaint_latitude = 55.6786513
+        self.complaint_longitude = 12.5693486
         self.complaint = Complaint(comments=self.complaint_comments,
                                    severity=self.complaint_severity,
                                    latitude=self.complaint_latitude,
@@ -52,8 +52,8 @@ class ViewTestCase(TestCase):
 
         self.complaint_data = {'category': 'Street Noise',
                                'severity': '5',
-                               'latitude': '55.6786513',
-                               'longitude': '12.5693486',
+                               'latitude': 55.6786513,
+                               'longitude': 12.5693486,
                                'owner': user.id}
         self.response = self.client.post(
             reverse('create'),

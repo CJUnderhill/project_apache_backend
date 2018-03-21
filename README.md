@@ -14,9 +14,10 @@ The APACHE backend system has the following dependencies:
   - Django 2.*
   - djangorestframework 3.7.7+
   - Pillow 5.*
-  - pytz 2018.3+
   - django-cors-headers 2.2.*
   - virtualenv 15.0.1+
+  - django-filter 1.1.*
+  - djangorestframework-filters 0.10.2+
   
 Ensure that the proper version of python is installed before proceeding.
 
@@ -36,7 +37,7 @@ source venv/bin/activate
 This will isolate the operations of this program from the rest of the operating system.
 Finally, install all of the python dependencies listed above. You may run this command to do so:
 ```bash
-pip3 install Django djangorestframework Pillow pytz django-cors-headers
+pip3 install Django djangorestframework django-cors-headers django-filter djangorestframework-filters Pillow
 ```
 
 ### Instantiate the database
@@ -148,8 +149,8 @@ The information contained within the complaint.
 {
     "comments": "[String 250 characters max]",
     "severity": "[Integer between 1 and 5]",
-    "latitude": "[Unicode 64 characters max]",
-    "longitude": "[Unicode 64 characters max]",
+    "latitude": "[Float]",
+    "longitude": "[Float]",
     "image": "[NOT REQUIRED; Local file location unicode 128 characters max]",
     "audio": "[NOT REQUIRED; Local file location unicode 128 characters max]"
 }
@@ -161,8 +162,8 @@ The information contained within the complaint.
 {
     "comments": "Street Noise",
     "severity": 5,
-    "latitude": "55.1",
-    "longitude": "11.5",
+    "latitude": 55.1,
+    "longitude": 11.5,
     "image": "C:/media/photos/2018-03-15_151316.1207580000.jpg"
 }
 ```
@@ -182,8 +183,8 @@ A list of JSON objects containing all complaints within the system.
     "owner": "root",
     "comments": "Street Noise",
     "severity": 5,
-    "latitude": "55.1",
-    "longitude": "11.5",
+    "latitude": 55.1,
+    "longitude": 11.5,
     "image": "http://localhost:8000/media/photos/2018-03-15_151316.1207580000.jpg",
     "audio": null
 }
@@ -230,9 +231,9 @@ A list of JSON objects containing all complaints within the system.
         "timestamp": "2018-03-15T15:13:16.120758Z",
         "owner": "root",
         "comments": "Street Noise",
-        "severity": "10",
-        "latitude": "55.1",
-        "longitude": "11.5",
+        "severity": "5",
+        "latitude": 55.1,
+        "longitude": 11.5,
         "image": "http://localhost:8000/media/photos/2018-03-15_151316.1207580000.jpg",
         "audio": "http://localhost:8000/media/audio/2018-03-15_151316.1207580000.aac"
     }
@@ -279,11 +280,79 @@ A single JSON object containing a queried complaint from within the system.
     "timestamp": "2018-03-15T15:13:16.120758Z",
     "owner": "root",
     "comments": "Street Noise",
-    "severity": "10",
-    "latitude": "55.1",
-    "longitude": "11.5",
+    "severity": "5",
+    "latitude": 55.1,
+    "longitude": 11.5,
     "image": "http://localhost:8000/media/photos/2018-03-15_151316.1207580000.jpg",
     "audio": "http://localhost:8000/media/audio/2018-03-15_151316.1207580000.aac"
+}
+```
+
+### Create a user account
+
+Create a user account in the system.
+
+**URL** : `/users/`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Permissions required** : None
+
+**Headers**
+
+The authentication token associated with the posting account.
+
+```
+    "Authorization": "Token [System-generated Authentication Token]"
+```
+
+**Header example** All fields must be sent.
+
+```
+    "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
+```
+
+**Data constraints**
+
+Required user account information.
+
+```json
+{
+    "username": "[String 30 characters max]",
+    "password": "[String 6 characters min]",
+    "first_name": "[Unicode 64 characters max]",
+    "last_name": "[Unicode 64 characters max]"
+}
+```
+
+**Data example**
+
+```json
+{
+    "username": "chadju",
+    "password": "testpassword",
+    "first_name": "Chad",
+    "last_name": "Underhill"
+}
+```
+
+#### Success Response
+
+**Code** : `201 CREATED`
+
+**Content examples**
+
+A JSON object containing the new user's data.
+
+```json
+{
+    "username": "chadju",
+    "password": "testpassword",
+    "first_name": "Chad",
+    "last_name": "Underhill",
+    "complaints": []
 }
 ```
 
@@ -381,4 +450,83 @@ A single JSON object containing a queried user from within the system.
         4
     ]
 }
+```
+
+### Filter complaints
+
+Filter complaints by a number of criteria.
+
+**URL** : `/complaints/?owner=&severity=&category=&timestamp_0=&timestamp_1=&latitude_0=&latitude_1=&longitude_0=&longitude_1=`
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Permissions required** : None
+
+**Headers**
+
+The authentication token associated with the account.
+
+```
+    "Authorization": "Token [System-generated Authentication Token]"
+```
+
+**Header example** All fields must be sent.
+
+```
+    "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
+```
+
+#### Available Filters
+
+**Owner** : `/complaints/?owner=<userID>`
+
+**Severity** : `/complaints/?severity=<integer>`
+
+**Category** : `/complaints/?category=<String>`
+
+**DateTime Range** : `/complaints/?timestamp_0=<ISO8601_DateTime>&timestamp_1=<ISO8601_DateTime>`
+
+**Latitude Range** : `/complaints/?latitude_0=<float>&latitude_1=<float>`
+
+**Longitude Range** : `/complaints/?longitude_0=<float>&longitude_1=<float>`
+
+#### Usage Example
+
+Selecting complaints from user with ID of 1, where severity was listed as 5 and category was "music":
+
+`/complaints/?owner=1&severity=5&category=music`
+
+Selecting complaints between 1:15pm and 1:20pm on March 15th, 2018:
+
+`/complaints/?timestamp_0=2018-03-15+13:15:00&timestamp_1=2018-03-15+13:20:00`
+
+Selecting complaints between latitude ranges of 55.1 and 55.1 and longitude ranges of 11.4 and 11.6:
+
+`/complaints/?latitude_0=55.1&latitude_1=55.2&longitude_0=11.4&longitude_1=11.6`
+
+
+#### Success Response
+
+**Code** : `200 OK`
+
+**Content examples**
+
+A list of JSON objects containing all complaints within the system that fit the configured filters.
+
+```json
+[
+    {
+        "id": 1,
+        "timestamp": "2018-03-15T15:13:16.120758Z",
+        "owner": "root",
+        "comments": "Street Noise",
+        "severity": "5",
+        "latitude": 55.1,
+        "longitude": 11.5,
+        "image": "http://localhost:8000/media/photos/2018-03-15_151316.1207580000.jpg",
+        "audio": "http://localhost:8000/media/audio/2018-03-15_151316.1207580000.aac"
+    }
+]
 ```
