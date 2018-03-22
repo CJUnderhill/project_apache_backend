@@ -24,7 +24,7 @@ Ensure that the proper version of python is installed before proceeding.
 ### Configuration
 This section assumes the you are operating in a bash terminal.
 
-First, enter the `apache` directory in the main project folder. Create a virtual environment for this project by running:
+First, enter the main project folder. Create a virtual environment for this project by running:
 ```bash
 pip3 install virtualenv
 virtualenv -p python3 venv
