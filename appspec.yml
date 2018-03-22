@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/www
+    destination: /home/ec2-user/www/apache_backend
 permissions:
   - object: /home/ec2-user/www
     pattern: "*"
@@ -10,20 +10,20 @@ permissions:
     group: ec2-user
 hooks:
   AfterInstall:
-    - location: scripts/install_os_dependencies.sh
+    - location: /home/ec2-user/www/apache_backend/scripts/install_os_dependencies.sh
       timeout: 6000
       runas: root
-    - location: scripts/install_python_dependencies.sh
+    - location: /home/ec2-user/www/apache_backend/scripts/install_python_dependencies.sh
       timeout: 6000
       runas: ec2-user
-    - location: scripts/migrate.sh
+    - location: /home/ec2-user/www/apache_backend/scripts/migrate.sh
       timeout: 6000
       runas: ec2-user
   ApplicationStart:
-    - location: scripts/start_application.sh
+    - location: /home/ec2-user/www/apache_backend/scripts/start_application.sh
       timeout: 6000
       runas: ec2-user
   ApplicationStop:
-    - location: scripts/stop_application.sh
+    - location: /home/ec2-user/www/apache_backend/scripts/stop_application.sh
       timeout: 6000
       runas: ec2-user
