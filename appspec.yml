@@ -10,20 +10,20 @@ permissions:
     group: ec2-user
 hooks:
   AfterInstall:
-    - location: /home/ec2-user/www/apache_backend/scripts/install_os_dependencies.sh
+    - location: /scripts/install_os_dependencies.sh
       timeout: 6000
       runas: root
-    - location: /home/ec2-user/www/apache_backend/scripts/install_python_dependencies.sh
+    - location: /scripts/install_python_dependencies.sh
       timeout: 6000
       runas: ec2-user
-    - location: /home/ec2-user/www/apache_backend/scripts/migrate.sh
+    - location: /scripts/migrate.sh
       timeout: 6000
       runas: ec2-user
   ApplicationStart:
-    - location: /home/ec2-user/www/apache_backend/scripts/start_application.sh
+    - location: /scripts/start_application.sh
       timeout: 6000
       runas: ec2-user
   ApplicationStop:
-    - location: /home/ec2-user/www/apache_backend/scripts/stop_application.sh
+    - location: /scripts/stop_application.sh
       timeout: 6000
       runas: ec2-user
