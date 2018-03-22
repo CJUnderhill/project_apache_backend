@@ -142,3 +142,7 @@ MEDIA_URL = '/media/'
 # Django CORS Headers => https://github.com/ottoyiu/django-cors-headers
 # TODO Change to Whitelist before production!
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+    'http://localhost:8080/?#/SubmitAComplaint'
+)
