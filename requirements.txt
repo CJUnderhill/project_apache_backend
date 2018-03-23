@@ -1,6 +1,6 @@
-django-cors-headers==2.2.0
-Pillow==3.1.2
-virtualenv==15.0.1
-Django==2.0.3
-django-filter==1.1.0
-djangorestframework==3.7.7
+django-cors-headers>=2.2.0
+Pillow>=3.1.2
+virtualenv>=15.0.1
+Django>=2.0.0
+django-filter>=1.1.0
+djangorestframework>=3.7.7
