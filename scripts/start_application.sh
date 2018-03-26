@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 cd /home/ubuntu/www/apache_backend/
 source /home/ubuntu/www/apache_backend-venv/bin/activate
-forever start ./runserver.sh
+forever start scripts/runserver.sh
