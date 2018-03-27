@@ -13,3 +13,11 @@ class IsOwner(BasePermission):
         if isinstance(obj, Complaint):
             return obj.owner == request.user
         return obj.owner == request.user
+
+
+class IsCreationOrIsAuthenticated(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "POST" or request.user.is_authenticated:
+            return True
+        else:
+            return False

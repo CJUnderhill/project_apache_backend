@@ -3,7 +3,7 @@ from django_filters import rest_framework as filters
 from rest_framework import generics, permissions
 
 from .models import Complaint
-from .permissions import IsOwner
+from .permissions import IsOwner, IsCreationOrIsAuthenticated
 from .serializers import ComplaintSerializer, UserSerializer
 
 
@@ -53,11 +53,7 @@ class UserView(generics.ListCreateAPIView):
     """View to list the user queryset."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    # def get_permissions(self):
-    #     # allow non-authenticated user to create via POST
-    #     return (permissions.AllowAny() if self.request.method == 'POST'
-    #             else permissions.IsAuthenticated())
+    permission_classes = (IsCreationOrIsAuthenticated,)
 
     def perform_create(self, serializer):
         """Save the POST data when creating a new complaint"""
