@@ -296,23 +296,9 @@ Create a user account in the system.
 
 **Method** : `POST`
 
-**Auth required** : YES
+**Auth required** : NO
 
 **Permissions required** : None
-
-**Headers**
-
-The authentication token associated with the posting account.
-
-```
-    "Authorization": "Token [System-generated Authentication Token]"
-```
-
-**Header example** All fields must be sent.
-
-```
-    "Authorization": "Token 3e98cec2d1280100c8c4ea65e0eaaf0b2b384674"
-```
 
 **Data constraints**
 

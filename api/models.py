@@ -28,9 +28,18 @@ class Complaint(models.Model):
         (5, '5'),
     )
 
+    CATEGORIES = (
+        ("BUS", "Business Venue"),
+        ("CON", "Construction"),
+        ("TRA", "Traffic"),
+        ("STR", "Street Noise"),
+        ("PRI", "Private Party"),
+        ("OTH", "Other")
+    )
+
     timestamp = models.DateTimeField(auto_now_add=True)
     comments = models.TextField()
-    category = models.TextField(blank=True)  # blank=True means field is not required
+    category = models.TextField(choices=CATEGORIES)
     severity = models.IntegerField(choices=SEVERITY_CHOICES, default=3)
     latitude = models.FloatField()  # TODO Ensure latitude is within acceptable range
     longitude = models.FloatField()  # TODO Ensure longitude is within acceptable range
