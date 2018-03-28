@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rm -rf /home/ubuntu/www/apache_backend
+sudo rm -rf /home/ubuntu/www/apache_backend/
