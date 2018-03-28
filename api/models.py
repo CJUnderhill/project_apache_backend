@@ -21,20 +21,20 @@ class Complaint(models.Model):
     """This class represents the Complaint model."""
 
     SEVERITY_CHOICES = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
     )
 
     CATEGORIES = (
-        ("BUS", "Business Venue"),
-        ("CON", "Construction"),
-        ("TRA", "Traffic"),
-        ("STR", "Street Noise"),
-        ("PRI", "Private Party"),
-        ("OTH", "Other")
+        ("Business Venue", "Business Venue"),
+        ("Construction", "Construction"),
+        ("Traffic", "Traffic"),
+        ("Street Noise", "Street Noise"),
+        ("Private Party", "Private Party"),
+        ("Other", "Other")
     )
 
     timestamp = models.DateTimeField(auto_now_add=True)
