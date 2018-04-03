@@ -2,7 +2,7 @@
 This repository contains the backend REST API of the APACHE project, which aims to help in 
 collecting and analyzing noise complaints from inner-city Copenhagen.
 
-This project is built with Django and the Django REST Framework.
+This project is built with Django and the Django REST Framework. Developed by Chad Underhill for Worcester Polytechnic Institute.
 
 ## Setup
 This section details the steps required to set this project up.
