@@ -20,27 +20,24 @@ def audio_directory_path(instance, filename):
 class Complaint(models.Model):
     """This class represents the Complaint model."""
 
-    SEVERITY_CHOICES = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
+    CATEGORIES = (
+        ("Bar/Restaurant", "Bar/Restaurant"),
+        ("Construction", "Construction"),
+        ("Street Noise", "Street Noise"),
+        ("Private Celebration", "Private Celebration")
     )
 
-    CATEGORIES = (
-        ("Business Venue", "Business Venue"),
-        ("Construction", "Construction"),
-        ("Traffic", "Traffic"),
-        ("Street Noise", "Street Noise"),
-        ("Private Party", "Private Party"),
-        ("Other", "Other")
+    SUB_CATEGORIES = (
+        ("N/A", "N/A"),
+        ("Loud Music/Party", "Loud Music/Party"),
+        ("Loud Talking/Shouting", "Loud Talking/Shouting"),
+        ("Banging/Pounding", "Banging/Pounding")
     )
 
     timestamp = models.DateTimeField(auto_now_add=True)
     comments = models.TextField()
     category = models.TextField(choices=CATEGORIES)
-    severity = models.IntegerField(choices=SEVERITY_CHOICES, default=3)
+    sub_category = models.TextField(choices=SUB_CATEGORIES)
     latitude = models.FloatField()  # TODO Ensure latitude is within acceptable range
     longitude = models.FloatField()  # TODO Ensure longitude is within acceptable range
     image = models.ImageField(upload_to=image_directory_path, blank=True)  # blank=True means field is not required

@@ -20,7 +20,7 @@ class ComplaintFilter(filters.FilterSet):
 
     class Meta:
         model = Complaint
-        fields = ['owner', 'severity', 'category']
+        fields = ['owner', 'severity', 'category', 'sub_category']
         # fields = {'timestamp': 'range',
         #           'severity': 'exact',
         #           'owner': 'exact'}
@@ -65,19 +65,19 @@ class UserDetailsView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-class ComplaintsByUser(generics.ListAPIView):
-    serializer_class = ComplaintSerializer
-
-    def get_queryset(self):
-        """This queryset should return a list of all complaints from a given user."""
-        pk = self.kwargs('pk')
-        return Complaint.objects.filter(owner=pk)
-
-
-class ComplaintsByLocation(generics.ListAPIView):
-    serializer_class = ComplaintSerializer
-
-    def get_queryset(self):
-        """This queryset should return a list of all complaints within a given area."""
-        pass
+#
+# class ComplaintsByUser(generics.ListAPIView):
+#     serializer_class = ComplaintSerializer
+#
+#     def get_queryset(self):
+#         """This queryset should return a list of all complaints from a given user."""
+#         pk = self.kwargs('pk')
+#         return Complaint.objects.filter(owner=pk)
+#
+#
+# class ComplaintsByLocation(generics.ListAPIView):
+#     serializer_class = ComplaintSerializer
+#
+#     def get_queryset(self):
+#         """This queryset should return a list of all complaints within a given area."""
+#         pass
