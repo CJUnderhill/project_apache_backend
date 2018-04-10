@@ -46,7 +46,7 @@ class Complaint(models.Model):
 
     def __str__(self):
         """This function returns a string representation of the class's contents."""
-        return "{}".format(str(self.severity))
+        return "{}".format(str(self.category))
         # return '%s %s %s %s %s' % (str(self.timestamp), self.category, self.severity, self.latitude, self.longitude)
 
 

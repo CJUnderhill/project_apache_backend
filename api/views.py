@@ -20,10 +20,7 @@ class ComplaintFilter(filters.FilterSet):
 
     class Meta:
         model = Complaint
-        fields = ['owner', 'severity', 'category', 'sub_category']
-        # fields = {'timestamp': 'range',
-        #           'severity': 'exact',
-        #           'owner': 'exact'}
+        fields = ['owner', 'category', 'sub_category']
 
 
 # Create views here.
