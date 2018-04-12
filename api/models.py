@@ -35,7 +35,7 @@ class Complaint(models.Model):
     )
 
     timestamp = models.DateTimeField(auto_now_add=True)
-    comments = models.TextField()
+    comments = models.TextField(blank=True)
     category = models.TextField(choices=CATEGORIES)
     sub_category = models.TextField(choices=SUB_CATEGORIES)
     latitude = models.FloatField()  # TODO Ensure latitude is within acceptable range
