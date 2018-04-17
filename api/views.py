@@ -11,8 +11,8 @@ from .serializers import ComplaintSerializer, UserSerializer
 
 class ComplaintFilter(filters.FilterSet):
     timestamp = filters.DateTimeFromToRangeFilter(name='timestamp')
-    latitude = filters.NumericRangeFilter(name='latitude')
-    longitude = filters.NumericRangeFilter(name='longitude')
+    latitude = filters.RangeFilter(name='latitude')
+    longitude = filters.RangeFilter(name='longitude')
 
     # time = filters.TimeRangeFilter(name='timestamp')
     # timestamp__gte = filters.DateTimeFilter(name='timestamp', lookup_expr='timestamp__gte')
